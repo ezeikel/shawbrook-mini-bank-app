@@ -1,50 +1,103 @@
-# Welcome to your Expo app 👋
+# Shawbrook Mini Banking App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![App Screenshot](assets/images/screenshot.png)
 
-## Get started
+A React Native mobile banking application built with Expo, featuring biometric authentication, account management, and an AI-powered chatbot.
 
-1. Install dependencies
+## Features
 
+- **Biometric Authentication**: TouchID/FaceID login with PIN fallback
+- **Account Dashboard**: View account balances and details
+- **Account Details**: Transaction history and transfer options
+- **AI Chatbot**: Banking assistant powered by OpenAI
+- **Dark/Light Mode**: Theme switching support
+- **Secure Storage**: Encrypted session management
+
+## Tech Stack
+
+- **React Native** with Expo Router
+- **TypeScript** for type safety
+- **NativeWind** (Tailwind CSS) for styling
+- **React Context API** for state management
+- **Expo Local Authentication** for biometrics
+- **OpenAI API** for chatbot functionality
+- **Expo Secure Store** for secure storage
+
+## Setup
+
+1. **Install dependencies**
    ```bash
-   npm install
+   pnpm install
    ```
 
-2. Start the app
-
+2. **Environment setup**
+   
+   Set FontAwesome token in your shell:
    ```bash
-   npx expo start
+   export FONTAWESOME_NPM_AUTH_TOKEN=your_fontawesome_token_here
+   ```
+   
+   Create a `.env` file in the root directory:
+   ```
+   EXPO_PUBLIC_OPENAI_API_KEY=your_openai_api_key_here
    ```
 
-In the output, you'll find options to open the app in a
+3. **Start the app**
+   ```bash
+   pnpm start
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+4. **Run on device/simulator**
+   - iOS: `pnpm run ios`
+   - Android: `pnpm run android`
+   - Web: `pnpm run web`
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Architecture
 
-## Get a fresh project
+- **File-based routing** with Expo Router
+- **Context providers** for auth, chat, and theme state
+- **Service layer** for API calls and secure storage
+- **Component-based UI** with reusable components
+- **Mock data** for accounts and transactions
 
-When you're ready, run:
+## Optional Features Implemented
 
-```bash
-npm run reset-project
-```
+- ✅ Dark/light mode support
+- ✅ TypeScript configuration and ESLint setup
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Future Improvements
 
-## Learn more
+### Code Quality & Development Experience
+- **Enhanced ESLint/TypeScript**: Stricter ESLint rules, better TypeScript checking, and commit hooks with Husky
+- **Prettier**: Code formatting with `pnpm format` command
+- **Testing**: React Native Testing Library for unit tests, Maestro for E2E testing
+- **Storybook**: Component documentation and testing
 
-To learn more about developing your project with Expo, look at the following resources:
+### Security & Performance
+- **Sentry Crashalytics**: Error tracking and crash reporting
+- **Performance Monitoring**: React Native Performance, memory optimization
+- **Code Optimization**: Strategic use of `useCallback`, `useMemo`, and `React.memo` for performance
+- **Memory Optimization**: Image optimization, list virtualization
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### User Experience
+- **Offline Support**: Service workers, cached data
+- **Push Notifications**: Transaction alerts, security notifications
+- **Accessibility**: Screen reader support, voice commands
+- **Internationalization**: Multi-language support, RTL layouts
 
-## Join the community
+### Production Features
+- **Real API Integration**: Replace mock data with actual banking APIs
+- **Analytics**: PostHog for user behavior tracking and product analytics
+- **A/B Testing**: Feature flags, gradual rollouts
+- **CI/CD**: GitHub Actions or Expo Workflows for automated testing and deployment
+- **App Store Deployment**: 
+  - iOS: Apple App Store and TestFlight setup
+  - Android: Google Play Store setup
+  - EAS Build profiles in `eas.json` for different environments (development, staging, production)
 
-Join our community of developers creating universal apps.
+## Notes
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Uses mock account data for demonstration
+- Biometric authentication requires device support
+- OpenAI API key needed for full chatbot functionality
+- Fallback responses available when API is unavailable
