@@ -1,7 +1,8 @@
-import { MOCK_ACCOUNTS, formatCurrency } from '@/constants/MockData';
+import AccountCard from '@/components/AccountCard/AccountCard';
+import { MOCK_ACCOUNTS } from '@/constants/MockData';
 import { router } from 'expo-router';
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Accounts = () => {
@@ -16,17 +17,11 @@ const Accounts = () => {
       </View>
       <ScrollView className="flex-1 p-4">
         {MOCK_ACCOUNTS.map((account) => (
-          <TouchableOpacity
+          <AccountCard
             key={account.id}
-            className="bg-white dark:bg-gray-800 p-5 rounded-2xl mb-4 flex-row justify-between items-center shadow-sm"
-            onPress={() => handleAccountPress(account.id)}
-          >
-            <View className="flex-1">
-              <Text className="text-xl font-bold text-gray-900 dark:text-white mb-1">{account.name}</Text>
-              <Text className="text-lg text-gray-500 dark:text-gray-400">{account.number}</Text>
-            </View>
-            <Text className="text-2xl font-bold text-shawbrook-pink">{formatCurrency(account.balance)}</Text>
-          </TouchableOpacity>
+            account={account}
+            onPress={handleAccountPress}
+          />
         ))}
       </ScrollView>
     </SafeAreaView>

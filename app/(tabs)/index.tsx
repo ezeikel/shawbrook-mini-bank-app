@@ -1,9 +1,12 @@
 import { useTheme } from '@/app/context/theme-context';
+import BalanceCard from '@/components/BalanceCard/BalanceCard';
+import GreetingHeader from '@/components/GreetingHeader/GreetingHeader';
 import Logo from '@/components/Logo';
-import { formatCurrency, formatTransactionAmount, MOCK_ACCOUNTS, MOCK_TRANSACTIONS, type Account, type Transaction } from '@/constants/MockData';
+import QuickActionCard from '@/components/QuickActionCard/QuickActionCard';
+import TransactionItem from '@/components/TransactionItem/TransactionItem';
+import { MOCK_ACCOUNTS, MOCK_TRANSACTIONS, type Account, type Transaction } from '@/constants/MockData';
 import { faGear } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { getHours } from 'date-fns';
 import { router, useNavigation } from 'expo-router';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -12,18 +15,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const Home = () => {
   const { theme } = useTheme();
   const navigation = useNavigation();
-
-  const getGreeting = () => {
-    const hour = getHours(new Date());
-
-    if (hour < 12) {
-      return 'Good morning!';
-    } else if (hour < 17) {
-      return 'Good afternoon!';
-    } else {
-      return 'Good evening!';
-    }
-  };
 
   // calculate total balance from all accounts
   const totalBalance = (MOCK_ACCOUNTS as Account[]).reduce((total: number, account: Account) => {
@@ -67,26 +58,18 @@ const Home = () => {
         </TouchableOpacity>
       </View>
       <ScrollView className="flex-1 p-4">
-        <View className="mb-6">
-          <Text className="text-3xl font-bold text-gray-900 dark:text-white mb-1">{getGreeting()}</Text>
-          <Text className="text-lg text-gray-600 dark:text-gray-300">Welcome to Shawbrook Bank</Text>
-        </View>
-        <View className="bg-shawbrook-pink p-6 rounded-2xl mb-6 items-center">
-          <Text className="text-lg text-white/80 mb-2">Total Balance</Text>
-          <Text className="text-4xl font-bold text-white">{formatCurrency(totalBalance)}</Text>
-        </View>
+        <GreetingHeader />
+        <BalanceCard balance={totalBalance} />
         <View className="mb-6">
           <Text className="text-xl font-bold text-gray-900 dark:text-white mb-4">Quick Actions</Text>
           <View className="flex-row flex-wrap gap-3">
             {quickActions.map((action) => (
-              <TouchableOpacity
+              <QuickActionCard
                 key={action.id}
-                className="bg-white dark:bg-gray-800 p-4 rounded-xl items-center w-[48%] shadow-sm mb-2"
+                title={action.title}
+                icon={action.icon}
                 onPress={action.action}
-              >
-                <Text className="text-3xl mb-2">{action.icon}</Text>
-                <Text className="text-lg font-semibold text-gray-900 dark:text-white text-center">{action.title}</Text>
-              </TouchableOpacity>
+              />
             ))}
           </View>
         </View>
@@ -98,14 +81,13 @@ const Home = () => {
             </TouchableOpacity>
           </View>
           {recentActivity.map((activity) => (
-            <View key={activity.id} className="flex-row justify-between items-center py-3 border-b border-gray-100 dark:border-gray-700">
-              <View className="flex-1">
-                <Text className="text-lg text-gray-900 dark:text-white mb-0.5">{activity.description}</Text>
-                <Text className="text-sm text-shawbrook-pink mb-0.5">{activity.accountName}</Text>
-                <Text className="text-sm text-gray-500 dark:text-gray-400">{activity.date}</Text>
-              </View>
-              <Text className={`text-lg font-semibold ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>{formatTransactionAmount(activity.amount)}</Text>
-            </View>
+            <TransactionItem
+              key={activity.id}
+              transaction={activity}
+              showAccountName={true}
+              accountName={activity.accountName}
+              className="last:border-b-0"
+            />
           ))}
         </View>
       </ScrollView>

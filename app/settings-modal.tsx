@@ -1,10 +1,11 @@
 import { useAuth } from '@/app/context/auth-context';
 import { useTheme } from '@/app/context/theme-context';
+import SettingsItem from '@/components/SettingsItem/SettingsItem';
 import { faMoon, faSignOut, faSun, faXmark } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { router } from 'expo-router';
 import React from 'react';
-import { Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 const SettingsModal = () => {
   const { theme, toggleTheme } = useTheme();
@@ -25,22 +26,19 @@ const SettingsModal = () => {
         </TouchableOpacity>
       </View>
       <View className="mt-6 mx-4 rounded-2xl bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 shadow">
-        <View className="flex-row items-center justify-between px-5 py-4">
-          <View className="flex-row items-center">
-            <FontAwesomeIcon icon={isDark ? faSun : faMoon} size={22} color={isDark ? '#FFD700' : '#222'} />
-            <Text className="ml-4 text-lg text-gray-900 dark:text-white">Dark Mode</Text>
-          </View>
-          <Switch
-            value={isDark}
-            onValueChange={toggleTheme}
-            thumbColor={isDark ? '#FFD700' : '#f4f3f4'}
-            trackColor={{ false: '#ccc', true: '#4B5563' }}
-          />
-        </View>
-        <TouchableOpacity className="flex-row items-center px-5 py-4" onPress={handleLogout}>
-          <FontAwesomeIcon icon={faSignOut} size={22} color="#DC2626" />
-          <Text className="ml-4 text-lg text-red-600 font-semibold">Logout</Text>
-        </TouchableOpacity>
+        <SettingsItem
+          icon={isDark ? faSun : faMoon}
+          title="Dark Mode"
+          isSwitch={true}
+          switchValue={isDark}
+          onSwitchChange={toggleTheme}
+        />
+        <SettingsItem
+          icon={faSignOut}
+          title="Logout"
+          onPress={handleLogout}
+          isDestructive={true}
+        />
       </View>
     </View>
   );
